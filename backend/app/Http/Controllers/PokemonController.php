@@ -43,9 +43,13 @@ class PokemonController extends Controller
 
     public function populate()
     {
+        set_time_limit(150);
         try {
             
-            $response = Http::get('https://pokeapi.co/api/v2/pokemon?offset=1&limit=1302');
+            $responseCount = Http::get('https://pokeapi.co/api/v2/pokemon');
+            $dataCount = $responseCount->json();
+            $limit = $dataCount['count'];
+            $response = Http::get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=$limit");
 
             $data = $response->json();
 
@@ -72,7 +76,7 @@ class PokemonController extends Controller
                 $count++;
             }
 
-            return Response()->json($count . ' registros criados no banco');
+            return Response()->json([$count . ' registros criados no banco']);
 
 
         } catch (RequestException $e) {

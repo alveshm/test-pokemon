@@ -18,8 +18,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     volumes:
       - ./:/var/www
     entrypoint: ["/var/www/docker/php-fpm/entrypoint.sh"]
